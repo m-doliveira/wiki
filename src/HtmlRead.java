@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class HtmlRead {
@@ -21,10 +22,15 @@ public class HtmlRead {
     JLabel bottomLabel;
     JButton submit;
     JScrollPane scroll;
+    public int maxDepth;
+    public ArrayList<String> path = new ArrayList<>();
+    public int k;
     
 
     public static void main(String[] args) {
         HtmlRead html = new HtmlRead();
+
+       // WikiGame w = new WikiGame();
     }
 
     public HtmlRead() {
@@ -125,6 +131,48 @@ public class HtmlRead {
         }
 
     }
+
+
+
+
+
+    public void WikiGame() {
+
+        String startLink = "";  // beginning link, where the program will start
+        String endLink = "";    // ending link, where the program is trying to get to
+        maxDepth = 1;           // start this at 1 or 2, and if you get it going fast, increase
+
+        if (findLink(startLink, endLink, 0)) {
+            System.out.println("found it********************************************************************");
+            path.add(startLink);
+        } else {
+            System.out.println("did not find it********************************************************************");
+        }
+
+    }
+
+    // recursion method
+    public boolean findLink(String startLink, String endLink, int depth) {
+
+        System.out.println("depth is: " + depth + ", link is: https://en.wikipedia.org" + startLink);
+
+        // BASE CASE (search for relevant links)
+        if (k>1) {
+
+        }
+        //(if you find the term that you are looking for)
+        else if (k<0) {
+
+        }
+
+        // GENERAL RECURSIVE CASE (if you hit the max depth)
+        else {
+
+        }
+
+        return false;
+    }
+
 
     public void actionPerformed(ActionEvent e) {
 
