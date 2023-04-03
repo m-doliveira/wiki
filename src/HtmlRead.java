@@ -15,7 +15,7 @@ public class HtmlRead {
     int w = 50;
     int h = 50;
     JTextArea input;
-    JTextField term;
+    JTextField end;
     JTextArea output;
     JLabel topLabel;
     JLabel midLabel;
@@ -41,8 +41,8 @@ public class HtmlRead {
         topLabel = new JLabel("input URL");
         input = new JTextArea();
         input.setSize(w, h);
-        midLabel = new JLabel("key term");
-        term = new JTextField();
+        midLabel = new JLabel("end page");
+        end = new JTextField();
         bottomLabel = new JLabel("results");
         output = new JTextArea();
         output.setSize(w, h);
@@ -54,7 +54,7 @@ public class HtmlRead {
         frame.add(topLabel);
         frame.add(input);
         frame.add(midLabel);
-        frame.add(term);
+        frame.add(end);
         frame.add(submit);
         frame.add(bottomLabel);
         frame.add(scroll);
@@ -64,7 +64,7 @@ public class HtmlRead {
 
     }
 
-    public void findlink() {
+    public void parcelink(String startLink) {
         try {
             //System.out.println();
             //System.out.print("hello \n");
@@ -79,7 +79,7 @@ public class HtmlRead {
             while ((line = reader.readLine()) != null) {
                 // look into using .split commands
                 //   System.out.println(term.getText());
-                if (line.contains("href=") && line.contains(term.getText())) {
+                if (line.contains("href=") && line.contains(end.getText())) {
                     // System.out.println(line);
 
                     int start = line.indexOf("href=") + 6;
@@ -140,7 +140,7 @@ public class HtmlRead {
 
         String startLink = "";  // beginning link, where the program will start
         String endLink = "";    // ending link, where the program is trying to get to
-        maxDepth = 1;           // start this at 1 or 2, and if you get it going fast, increase
+        maxDepth = 2;           // start this at 1 or 2, and if you get it going fast, increase
 
         if (findLink(startLink, endLink, 0)) {
             System.out.println("found it********************************************************************");
@@ -157,17 +157,17 @@ public class HtmlRead {
         System.out.println("depth is: " + depth + ", link is: https://en.wikipedia.org" + startLink);
 
         // BASE CASE (search for relevant links)
-        if (k>1) {
-
+        if (depth>maxDepth) {
+        System.out.println("max depth reached");
         }
         //(if you find the term that you are looking for)
-        else if (k<0) {
-
+        else if (startLink.equals(endLink)) {
+         System.out.println("end page found");
         }
-
         // GENERAL RECURSIVE CASE (if you hit the max depth)
         else {
 
+    parcelink(startLink);
         }
 
         return false;
@@ -183,7 +183,8 @@ public class HtmlRead {
             String command = e.getActionCommand();
 
             if (command.equals("search")) {
-                findlink();
+                parcelink(input.toString());
+                WikiGame();
             }
 
         }
