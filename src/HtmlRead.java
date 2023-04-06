@@ -34,7 +34,7 @@ public class HtmlRead {
     }
 
     public HtmlRead() {
-        frame = new JFrame("link_search");
+        frame = new JFrame("wiki_game");
         frame.setLayout(new GridLayout(7, 1));
         frame.setSize(width, height);
         frame.setVisible(true);
@@ -43,7 +43,7 @@ public class HtmlRead {
         input.setSize(w, h);
         midLabel = new JLabel("end page");
         end = new JTextField();
-        bottomLabel = new JLabel("results");
+        bottomLabel = new JLabel("path");
         output = new JTextArea();
         output.setSize(w, h);
         submit = new JButton("search");
@@ -167,7 +167,8 @@ public class HtmlRead {
         // GENERAL RECURSIVE CASE (if you hit the max depth)
         else {
 
-    parcelink(startLink);
+        //findLink(String startLink, String endLink, int depth);
+     parcelink(startLink);
         }
 
         return false;
