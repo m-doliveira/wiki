@@ -138,8 +138,8 @@ public class HtmlRead {
 
     public void WikiGame() {
 
-        String startLink = "";  // beginning link, where the program will start
-        String endLink = "";    // ending link, where the program is trying to get to
+        String startLink = "https://en.wikipedia.org/wiki/Helianthus" ;  // beginning link, where the program will start
+        String endLink = "https://en.wikipedia.org/wiki/Common_sunflower";    // ending link, where the program is trying to get to
         maxDepth = 2;           // start this at 1 or 2, and if you get it going fast, increase
 
         if (findLink(startLink, endLink, 0)) {
@@ -167,8 +167,8 @@ public class HtmlRead {
         // GENERAL RECURSIVE CASE (if you hit the max depth)
         else {
 
-        //findLink(String startLink, String endLink, int depth);
-     parcelink(startLink);
+        findLink(startLink, endLink, depth+1);
+     //parcelink(startLink);
         }
 
         return false;
