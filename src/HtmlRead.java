@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class HtmlRead {
     JFrame frame;
@@ -25,10 +24,12 @@ public class HtmlRead {
     public int maxDepth;
     public ArrayList<String> path = new ArrayList<>();
     public int k;
+    public String a;
     
 
     public static void main(String[] args) {
         HtmlRead html = new HtmlRead();
+
 
        // WikiGame w = new WikiGame();
     }
@@ -62,59 +63,58 @@ public class HtmlRead {
 
 
 
+
     }
 
     public void parcelink(String startLink) {
         try {
-            //System.out.println();
-            //System.out.print("hello \n");
             URL url = new URL(input.getText());
 
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(url.openStream())
             );
-            String line;
 
 
-            while ((line = reader.readLine()) != null) {
-                // look into using .split commands
-                //   System.out.println(term.getText());
-                if (line.contains("href=") && line.contains(end.getText())) {
+
+
+
+            while ((a = reader.readLine()) != null) {
+                if (a.contains("href=") &&a.contains(end.getText())) {
                     // System.out.println(line);
 
-                    int start = line.indexOf("href=") + 6;
-                    line = line.substring(start);
-                    System.out.println("og "+line);
+                    int start = a.indexOf("href=") + 6;
+                    a = a.substring(start);
+                    System.out.println("og "+a);
                     int end;
                     int n = -1;
-                    int end1 = line.indexOf("\"");
-                    int end2 = line.indexOf("\'");
+                    int end1 = a.indexOf("\"");
+                    int end2 = a.indexOf("\'");
                     System.out.println("end1 \": " + end1 + " end 2 \':  "+ end2);
                     if (!(end1 == n)&&!(end2 == n)) {
 
                         if (end1 < end2) {
                             end = end1;
-                            String link = line.substring(0, end);
+                            String link = a.substring(0, end);
                             System.out.println(link);
                             output.setText(output.getText()+"\n"+link);
                         }
 
                      else{
                         end = end2;
-                        String link = line.substring(0, end);
+                        String link = a.substring(0, end);
                         System.out.println(link);
                         output.append("\n" +link);
                     }}
 
                     if (end1==n){
                         end=end2;
-                        String link = line.substring(0, end);
+                        String link = a.substring(0, end);
                         System.out.println(link);
                         output.append("\n"+link);
                     }
                     if (end2==n){
                         end=end1;
-                        String link = line.substring(0, end);
+                        String link = a.substring(0, end);
                         System.out.println(link);
                         output.append("\n"+link);
                     }
@@ -139,6 +139,7 @@ public class HtmlRead {
     public void WikiGame() {
 
         String startLink = "https://en.wikipedia.org/wiki/Helianthus" ;  // beginning link, where the program will start
+
         String endLink = "https://en.wikipedia.org/wiki/Common_sunflower";    // ending link, where the program is trying to get to
         maxDepth = 2;           // start this at 1 or 2, and if you get it going fast, increase
 
@@ -159,19 +160,22 @@ public class HtmlRead {
         // BASE CASE (search for relevant links)
         if (depth>maxDepth) {
         System.out.println("max depth reached");
+        return false;
         }
         //(if you find the term that you are looking for)
         else if (startLink.equals(endLink)) {
          System.out.println("end page found");
+         return true;
         }
         // GENERAL RECURSIVE CASE (if you hit the max depth)
         else {
 
-        findLink(startLink, endLink, depth+1);
-     //parcelink(startLink);
+       // findLink(startLink, endLink, depth+1);
+     parcelink(a);
+            return false;
         }
 
-        return false;
+
     }
 
 
@@ -184,7 +188,7 @@ public class HtmlRead {
             String command = e.getActionCommand();
 
             if (command.equals("search")) {
-                parcelink(input.toString());
+                parcelink(a);
                 WikiGame();
             }
 
