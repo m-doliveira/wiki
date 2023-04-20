@@ -25,6 +25,7 @@ public class HtmlRead {
     public ArrayList<String> path = new ArrayList<>();
     public int k;
 
+
     
 
     public static void main(String[] args) {
@@ -65,20 +66,24 @@ public class HtmlRead {
 
     }
 
-    public void parcelink(String sLink) {
+    public void parcelink(String sLink1) {
         try {
-
-            URL url = new URL(sLink);
+            URL url = new URL(sLink1);
 
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(url.openStream())
             );
+            String sLink;
+
+            //System.out.println(sLink1);
+            while (( sLink = reader.readLine()) != null) {
+                System.out.println(sLink);
+
+                if (sLink.contains("href")){
+                    //&& sLink.contains(end.getText()))
 
 
-            while ((sLink = reader.readLine()) != null) {
-                if (sLink.contains("href=") &&sLink.contains(end.getText())) {
-                    // System.out.println(line);
-
+                    System.out.println(sLink);
                     int start = sLink.indexOf("href=") + 6;
                     sLink = sLink.substring(start);
                     System.out.println("og "+sLink);
@@ -120,11 +125,13 @@ public class HtmlRead {
                         output.append("\n"+link);
                         System.out.println("\n" +link);
                     }
+
+                    //does it contain the search term?
                 }
 
 
                 // if (line.indexOf("x", 50) != -1) {
-                // System.out.println(line);
+                //System.out.println(line);
                 // }
             }
             reader.close();
@@ -176,6 +183,8 @@ public class HtmlRead {
 
       //findLink(startLink, endLink, depth+1);
          parcelink(startLink);
+         System.out.println("additional links");
+         System.out.println(path);
             return false;
         }
 
@@ -183,9 +192,6 @@ public class HtmlRead {
     }
 
 
-    public void actionPerformed(ActionEvent e) {
-
-    }
 
     class ButtonClickListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
