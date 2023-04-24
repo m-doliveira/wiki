@@ -26,8 +26,6 @@ public class HtmlRead {
     public int k;
 
 
-    
-
     public static void main(String[] args) {
         HtmlRead html = new HtmlRead();
 
@@ -50,7 +48,7 @@ public class HtmlRead {
         submit = new JButton("search");
         submit.setActionCommand("search");
         submit.addActionListener(new ButtonClickListener());
-        scroll =new JScrollPane(output);
+        scroll = new JScrollPane(output);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         frame.add(topLabel);
         frame.add(input);
@@ -60,8 +58,6 @@ public class HtmlRead {
         frame.add(bottomLabel);
         frame.add(scroll);
         frame.setVisible(true);
-
-
 
 
     }
@@ -76,57 +72,67 @@ public class HtmlRead {
             String sLink;
 
             //System.out.println(sLink1);
-            while (( sLink = reader.readLine()) != null) {
+            while ((sLink = reader.readLine()) != null) {
                 System.out.println(sLink);
 
-                if (sLink.contains("href")){
+                while (sLink.contains("href")) {
                     //&& sLink.contains(end.getText()))
 
 
                     System.out.println(sLink);
                     int start = sLink.indexOf("href=") + 6;
                     sLink = sLink.substring(start);
-                    System.out.println("og "+sLink);
-                    int end;
+                    System.out.println("og " + sLink);
+                    int end= start;
                     int n = -1;
                     int end1 = sLink.indexOf("\"");
                     int end2 = sLink.indexOf("\'");
-                    System.out.println("end1 \": " + end1 + " end 2 \':  "+ end2);
-                    System.out.println("\n" +sLink);
-                    if (!(end1 == n)&&!(end2 == n)) {
+                    System.out.println("end1 \": " + end1 + " end 2 \':  " + end2);
+                    System.out.println("\n" + sLink);
+
+                    String link = "";
+
+                    if (!(end1 == n) && !(end2 == n)) {
 
                         if (end1 < end2) {
                             end = end1;
-                            String link = sLink.substring(0, end);
-                            System.out.println(link);
-                            System.out.println("\n" +link);
-                            output.setText(output.getText()+"\n"+link);
+                            link = sLink.substring(0, end);
+//                            System.out.println(link);
+//                            System.out.println("\n" +link);
+//                            output.setText(output.getText()+"\n"+link);
+                        } else {
+                            end = end2;
+                            link = sLink.substring(0, end);
+//                        System.out.println(link);
+//                        System.out.println(("\n" +link));
+//                        output.append("\n" +link);
                         }
+                    }
 
-                     else{
+                    if (end1 == n) {
                         end = end2;
-                        String link = sLink.substring(0, end);
-                        System.out.println(link);
-                        System.out.println(("\n" +link));
-                        output.append("\n" +link);
-                    }}
-
-                    if (end1==n){
-                        end=end2;
-                        String link = sLink.substring(0, end);
-                        System.out.println(link);
-                        output.append("\n"+link);
-                        System.out.println("\n" +link);
+                        link = sLink.substring(0, end);
+//                        System.out.println(link);
+//                        output.append("\n"+link);
+//                        System.out.println("\n" +link);
                     }
-                    if (end2==n){
-                        end=end1;
-                        String link = sLink.substring(0, end);
-                        System.out.println(link);
-                        output.append("\n"+link);
-                        System.out.println("\n" +link);
+                    if (end2 == n) {
+                        end = end1;
+                        link = sLink.substring(0, end);
+                        // System.out.println(link);
+                        //output.append("\n"+link);
+                        // System.out.println("\n" +link);
                     }
-
+                    if (link.contains("/wiki/")) {
+                        link = sLink.substring(0,end);
+                        System.out.println(link);
+                        output.append("\n" + link);
+                        System.out.println("\n" + link);
+                    }
                     //does it contain the search term?
+
+                    //redefine slink
+                   // sLink=link;
                 }
 
 
@@ -142,13 +148,10 @@ public class HtmlRead {
     }
 
 
-
-
-
     public void WikiGame() {
 
-        String startLink = "https://en.wikipedia.org/wiki/Helianthus" ;  // beginning link, where the program will start
-
+        String startLink = "https://en.wikipedia.org/wiki/Helianthus";  // beginning link, where the program will start
+        startLink = "https://en.wikipedia.org/wiki/The_Untamed_(TV_series)";
         String endLink = "https://en.wikipedia.org/wiki/Common_sunflower";    // ending link, where the program is trying to get to
         maxDepth = 2;           // start this at 1 or 2, and if you get it going fast, increase
 
@@ -169,28 +172,27 @@ public class HtmlRead {
         System.out.println("depth is: " + depth + ", link is: https://en.wikipedia.org" + startLink);
 
         // BASE CASE (search for relevant links)
-        if (depth>maxDepth) {
-        System.out.println("max depth reached");
-        return false;
+        if (depth > maxDepth) {
+            System.out.println("max depth reached");
+            return false;
         }
         //(if you find the term that you are looking for)
         else if (startLink.equals(endLink)) {
-         System.out.println("end page found");
-         return true;
+            System.out.println("end page found");
+            return true;
         }
         // GENERAL RECURSIVE CASE (if you hit the max depth)
         else {
 
-      //findLink(startLink, endLink, depth+1);
-         parcelink(startLink);
-         System.out.println("additional links");
-         System.out.println(path);
+            //findLink(startLink, endLink, depth+1);
+            parcelink(startLink);
+            System.out.println("additional links");
+            System.out.println(path);
             return false;
         }
 
 
     }
-
 
 
     class ButtonClickListener implements ActionListener {
