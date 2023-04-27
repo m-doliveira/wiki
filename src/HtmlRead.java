@@ -23,6 +23,7 @@ public class HtmlRead {
     JScrollPane scroll;
     public int maxDepth;
     public ArrayList<String> path = new ArrayList<>();
+    public ArrayList<String> saveOut = new ArrayList<>();
     public int k;
 
 
@@ -126,8 +127,12 @@ public class HtmlRead {
                     if (link.contains("/wiki/")) {
                         link = sLink.substring(0,end);
                         System.out.println(link);
+                        saveOut.add(link);
+
+                        if (!saveOut.contains(link)) {
                         output.append("\n" + link);
                         System.out.println("\n" + link);
+                    }
                     }
                     //does it contain the search term?
 
@@ -159,6 +164,8 @@ public class HtmlRead {
         if (findLink(startLink, endLink, 0)) {
 
             System.out.println("found it********************************************************************");
+
+
             path.add(startLink);
         } else {
             System.out.println("did not find it********************************************************************");
