@@ -128,6 +128,7 @@ public class HtmlRead {
                         link = sLink.substring(0,end);
                         System.out.println(link);
                         saveOut.add(link);
+                        output.append("\n" + (saveOut));
 
                         if (!saveOut.contains(link)) {
                         output.append("\n" + link);
